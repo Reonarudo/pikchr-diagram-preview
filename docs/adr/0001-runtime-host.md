@@ -45,5 +45,6 @@ The user chose the browser Worker bundle, built by the plugin.
   the time limit. pikchr's wasm memory is fixed at build time, which bounds it.
 - The plugin's worker entry must be kept in step with the renderer's `worker.ts` when the
   renderer changes; `test/worker.test.ts` runs the embedded bundle against the real engine.
-- `isDesktopOnly` stays `true` until the plugin is tried on mobile, although nothing in it
-  needs Node or Electron.
+- Nothing in the plugin needs Node or Electron, so it is not desktop-only. A blob-URL Web Worker
+  and WebAssembly are available in the mobile apps' web views; checked under Obsidian's mobile
+  emulation, to be confirmed on devices through a BRAT pre-release.

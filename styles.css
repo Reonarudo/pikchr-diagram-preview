@@ -132,6 +132,17 @@ body.theme-dark.pikchr-follow-dark svg.pikchr {
   opacity: 1;
 }
 
+/* Phones and tablets have no hover: the button stays visible there. */
+body.is-mobile .pikchr-fence > .pikchr-toggle {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .pikchr-fence > .pikchr-toggle {
+    opacity: 1;
+  }
+}
+
 .pikchr-fence > .pikchr-toggle:hover {
   background: var(--background-modifier-hover);
   color: var(--icon-color-hover, var(--icon-color));

@@ -77,7 +77,8 @@ engine. Diagrams also draw in embedded notes, hover previews, Canvas cards and e
 light colours). Settings appear in Obsidian's settings search on 1.13 and later. On an Obsidian
 whose built-in Chromium predates `light-dark()`, diagrams keep the white card in dark themes.
 
-Desktop only for now.
+Works on desktop and on Obsidian's mobile apps, where the source button stays visible (there is
+no hover to reveal it). Nothing in the plugin needs Node or Electron.
 
 ## Development
 
