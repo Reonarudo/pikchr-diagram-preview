@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (2026-11-01, pre-release)
+## 0.1.0 (2026-11-01)
 
 First version, ported from the VS Code extension
 [pikchr-diagram-preview](https://github.com/Reonarudo/pikchr-markdown-preview) 0.3.0.
