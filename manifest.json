@@ -1,0 +1,10 @@
+{
+  "id": "pikchr-diagram-preview",
+  "name": "Pikchr Diagram Preview",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Render pikchr code blocks as diagrams, with a button to flip each one between the diagram and its source.",
+  "author": "Leonardo Marques",
+  "authorUrl": "https://github.com/Reonarudo",
+  "isDesktopOnly": true
+}
