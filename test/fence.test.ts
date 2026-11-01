@@ -18,7 +18,7 @@ const ICON_CODE = `<svg ${LUCIDE} class="svg-icon lucide-code-2 pikchr-icon-code
 const ICON_GRAPH = `<svg ${LUCIDE} class="svg-icon lucide-network pikchr-icon-graph">` +
   '<rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect>' +
   '<path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"></path><path d="M12 12V8"></path></svg>';
-const TOGGLE = `<button type="button" class="pikchr-toggle clickable-icon" aria-pressed="false" aria-label="Show source">${ICON_CODE}${ICON_GRAPH}</button>`;
+const TOGGLE = `<button class="pikchr-toggle clickable-icon" type="button" aria-pressed="false" aria-label="Show source">${ICON_CODE}${ICON_GRAPH}</button>`;
 
 // The DOM contract, asserted exactly once, here.
 test('every block is wrapped: toggle first, rendering slot, then the source <pre>', () => {
@@ -55,7 +55,7 @@ test('setView flips the wrapper, the button state and its name, and back', () =>
 });
 
 test('the loading line and error cards sit in the rendering slot', () => {
-  const parts = buildFence(document, 'box', fenceKey('box'));
+  const parts = buildFence(document.createElement('div'), 'box', fenceKey('box'));
   showLoading(parts.rendering);
   assert.equal(rendering(parts.wrapper), '<p class="pikchr-loading" role="status">Rendering pikchr diagram…</p>');
   showError(parts.rendering, 'Pikchr is unavailable: x');

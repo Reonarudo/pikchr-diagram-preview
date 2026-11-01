@@ -72,6 +72,11 @@ Rendering runs in a Web Worker inside Obsidian, built from
 WebAssembly, and an allowlist sanitizer for its SVG. Nothing is downloaded, installed or written
 to disk; the worker is embedded in `main.js`. See `docs/adr/0001-runtime-host.md`.
 
+The worker starts with the first diagram drawn, so a vault without pikchr blocks never loads the
+engine. Diagrams also draw in embedded notes, hover previews, Canvas cards and exported PDFs (in
+light colours). Settings appear in Obsidian's settings search on 1.13 and later. On an Obsidian
+whose built-in Chromium predates `light-dark()`, diagrams keep the white card in dark themes.
+
 Desktop only for now.
 
 ## Development
