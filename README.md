@@ -104,3 +104,6 @@ The renderer is pinned to a release tarball in `package.json` (`.npmrc` sets
 Diagram rendering is done by [Pikchr](https://pikchr.org) by D. Richard Hipp. The VS Code
 extension this ports was originally created by
 [xuzn](https://github.com/xuzn/pikchr-markdown-preview).
+
+The licenses of everything embedded in `main.js` are listed in
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), and their full texts are at the top of `main.js`.
