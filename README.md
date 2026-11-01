@@ -62,15 +62,14 @@ Diagrams follow the theme, as Mermaid diagrams do. In a dark theme they sit on t
 dark-theme colours: lines and text are lightened only as far as needed to read, filled shapes are
 darkened, and hues are kept, so colours that already read on a dark page stay as they are. In a
 light theme they sit on a white card with their exact colours. To keep every diagram on a white
-card, turn off **Follow dark themes** in the plugin's settings. See
-`docs/adr/0002-dark-theme-colours.md`.
+card, turn off **Follow dark themes** in the plugin's settings.
 
 ## How it renders
 
 Rendering runs in a Web Worker inside Obsidian, built from
 [pikchr-renderer](https://github.com/Reonarudo/pikchr-renderer): Pikchr compiled to
 WebAssembly, and an allowlist sanitizer for its SVG. Nothing is downloaded, installed or written
-to disk; the worker is embedded in `main.js`. See `docs/adr/0001-runtime-host.md`.
+to disk; the worker is embedded in `main.js`.
 
 The worker starts with the first diagram drawn, so a vault without pikchr blocks never loads the
 engine. Diagrams also draw in embedded notes, hover previews, Canvas cards and exported PDFs (in
