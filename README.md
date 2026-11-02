@@ -1,9 +1,8 @@
 # Pikchr Diagram Preview
 
-Renders [Pikchr](https://pikchr.org) code blocks as diagrams in Obsidian, in Reading view and
-Live Preview. A port of the VS Code extension of the same name.
-
-## Usage
+Draw diagrams in your notes with [Pikchr](https://pikchr.org), a small language for technical
+diagrams. Write a `pikchr` code block and the diagram appears in its place, in Reading view and
+Live Preview, on desktop and mobile.
 
 ~~~markdown
 ```pikchr
@@ -15,95 +14,102 @@ box same "Pikchr" "Formatter" "(pikchr.c)" fit
 ```
 ~~~
 
-## Fence attributes
+## Features
 
-A `pikchr` fence may carry an attribute block:
+- Diagrams in Reading view, Live Preview, embedded notes, hover previews, Canvas cards and
+  exported PDFs.
+- Captions, alignment and alt text for each diagram.
+- A button to see a diagram's code without leaving Reading view.
+- Follows your theme: diagrams stay readable in dark themes.
+- Works offline. Nothing to install besides the plugin.
+
+## Install
+
+1. In Obsidian, open **Settings → Community plugins** and turn off **Restricted mode** if it's on.
+2. Select **Browse**, search for **Pikchr Diagram Preview**, then select **Install** and **Enable**.
+
+To install by hand instead, download `main.js`, `manifest.json` and `styles.css` from the
+[latest release](https://github.com/Reonarudo/pikchr-diagram-preview/releases/latest) into
+`<your vault>/.obsidian/plugins/pikchr-diagram-preview/`, then enable the plugin.
+
+## Writing diagrams
+
+Put Pikchr code in a code block tagged `pikchr`. The [Pikchr user manual](https://pikchr.org/home/doc/trunk/doc/userman.md)
+explains the language. Text written with `print` appears above the diagram.
+
+### Captions and other options
+
+Add options in braces after `pikchr`:
 
 ~~~markdown
-```pikchr {alt="Sine curve" caption="Figure 1: Sine wave" align="center"}
-box "hi"
+```pikchr {caption="Figure 1: The formatter" align="center" alt="Two boxes joined by arrows"}
+box "Markdown" fit
+arrow
+box "HTML" fit
 ```
 ~~~
 
-- `alt`: an accessible name, for readers using assistive technology.
-- `caption`: plain text shown beneath the diagram.
-- `align`: `left`, `center` or `right`.
-- `class`: an extra CSS class on the `<svg>`, alongside the built-in `pikchr` class.
+| Option | What it does |
+| --- | --- |
+| `caption` | Text shown under the diagram. |
+| `align` | `left`, `center` or `right`. |
+| `alt` | A description read aloud by screen readers. |
+| `class` | A CSS class, for styling the diagram with a CSS snippet. |
 
-Values must be quoted, with single or double quotes; a backslash escapes a matching quote or a
-backslash. Values are plain text, never Markdown or HTML. Anything unrecognised is ignored and
-the diagram still renders; turn on **Debug logging** in the plugin's settings to see what was
-ignored in the developer console.
+Put each value in quotes. Values are plain text, not Markdown. If an option is misspelled, it's
+ignored and the diagram still appears.
 
-Attributes are read from the note's text. Where Obsidian renders a block without its note (some
-embeds and exports), the diagram renders bare.
+## Viewing the code
 
-## Viewing the source
-
-The plugin follows Obsidian's own handling of Mermaid diagrams:
-
-- **Live Preview:** hovering a diagram shows Obsidian's **Edit this block** button in its top
-  corner, which opens the code block for editing, as for Mermaid. Live Preview always shows the
+- **Reading view:** hover over a diagram and select the **</>** button in its corner to see the
+  code. Select it again to see the diagram. Obsidian remembers which diagrams you switched, even
+  after a restart. **Show every diagram in this note** in the command palette switches them all
+  back.
+- **Live Preview:** select Obsidian's own **Edit this block** button, just as for a Mermaid
   diagram.
-- **Reading view:** hovering a diagram shows a button of the same look in the same corner,
-  **Show source**, which flips the block to its source text; **Show diagram** flips it back. A
-  flipped block stays flipped across re-renders, reopening the note and restarting Obsidian, and
-  in every Reading view of the note. Two blocks with the same body are told apart by their order.
-  **Show every diagram in this note** in the command palette flips them all back.
+- **Phones and tablets:** the button is always visible.
 
-## Errors and limits
+## Dark and light themes
 
-A block that pikchr rejects shows the error, with its line and column within the block, in
-place of the diagram. `print` output appears as text above the diagram. Each diagram has three
-seconds to render (adjustable in settings, from half a second to a minute) and a
-64 000-character source limit.
+Diagrams follow your theme. In a dark theme, lines and text are lightened just enough to read,
+filled shapes are darkened, and colours keep their hue. In a light theme, diagrams appear on a
+white card with their exact colours.
 
-Diagrams follow the theme, as Mermaid diagrams do. In a dark theme they sit on the page in
-dark-theme colours: lines and text are lightened only as far as needed to read, filled shapes are
-darkened, and hues are kept, so colours that already read on a dark page stay as they are. In a
-light theme they sit on a white card with their exact colours. To keep every diagram on a white
-card, turn off **Follow dark themes** in the plugin's settings.
+To always show the exact colours on a white card, turn off **Follow dark themes** in the plugin's
+settings.
 
-## How it renders
+## Settings
 
-Rendering runs in a Web Worker inside Obsidian, built from
-[pikchr-renderer](https://github.com/Reonarudo/pikchr-renderer): Pikchr compiled to
-WebAssembly, and an allowlist sanitizer for its SVG. Nothing is downloaded, installed or written
-to disk; the worker is embedded in `main.js`.
+| Setting | What it does |
+| --- | --- |
+| **Render time limit** | How long a diagram may take before it's shown as an error. 3 seconds by default, from 0.5 to 60. |
+| **Follow dark themes** | On by default. Turn off to keep every diagram on a white card. |
+| **Debug logging** | Writes ignored options to the developer console, to help find a typo. |
 
-The worker starts with the first diagram drawn, so a vault without pikchr blocks never loads the
-engine. Diagrams also draw in embedded notes, hover previews, Canvas cards and exported PDFs (in
-light colours). Settings appear in Obsidian's settings search. On an Obsidian
-whose built-in Chromium predates `light-dark()`, diagrams keep the white card in dark themes.
+## Commands
 
-Works on desktop and on Obsidian's mobile apps, where the source button stays visible (there is
-no hover to reveal it). Nothing in the plugin needs Node or Electron.
+| Command | What it does |
+| --- | --- |
+| **Show every diagram in this note** | Switches every block in the note back from code to diagram. |
+| **Restart renderer** | Starts the diagram engine afresh and redraws open notes. |
 
-## Development
+## When something goes wrong
 
-Requires Node 22 or newer (see `.nvmrc`).
+- **A mistake in the code:** the error and its line and column within the block appear in place
+  of the diagram. Fix the code and the diagram comes back.
+- **"Took longer than…":** the diagram hit the **Render time limit**. Simplify it, or raise the
+  limit in settings.
+- **Large blocks:** a block may hold up to 64,000 characters.
 
-~~~sh
-npm ci
-npm run lint        # tsc --noEmit
-npm test            # node --test: attributes, toggle, scanner, DOM, host, and the real worker bundle
-npm run build       # main.js, with the worker bundle embedded
-npm run vault       # link this repo into ../test-vault as an enabled plugin
-npm run test:live   # a real Obsidian with a throwaway profile and vault, driven over CDP
-~~~
+## Privacy
 
-`npm run test:live` needs Obsidian installed (`OBSIDIAN_EXECUTABLE` overrides the path); it
-prints where it saved light and dark screenshots.
-
-The renderer is pinned to a release tarball in `package.json` (`.npmrc` sets
-`allow-remote=root` for npm 12). To take a new release, edit the URL, run `npm install`, check
-`src/worker/entry.ts` against the release's `src/worker.ts`, and run the tests.
+Diagrams are drawn on your device, inside Obsidian. The plugin doesn't connect to the internet,
+doesn't collect any data, and doesn't read or write any files.
 
 ## Credits
 
-Diagram rendering is done by [Pikchr](https://pikchr.org) by D. Richard Hipp. The VS Code
-extension this ports was originally created by
-[xuzn](https://github.com/xuzn/pikchr-markdown-preview).
+Diagrams are drawn by [Pikchr](https://pikchr.org), created by D. Richard Hipp. The licenses of
+the software built into this plugin are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-The licenses of everything embedded in `main.js` are listed in
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), and their full texts are at the top of `main.js`.
+Released under the [MIT License](LICENSE). To build or change the plugin, see
+[DEVELOPMENT.md](DEVELOPMENT.md).
